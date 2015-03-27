@@ -1,0 +1,13 @@
+Part One, exercise 6:
+Max: 1.425346
+Min: 0.043817
+Mean: 0.439335
+Median: 0.424248
+Deviation: 0.221515
+
+Part Two, exercise 3:
+Max: 1.423674
+Min: 0.052778
+Mean: 0.439800
+Median: 0.416869
+Deviation: 0.221556
