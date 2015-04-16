@@ -5,6 +5,7 @@ function [] = calc_fluxo(image, shift_image, image_name)
     Iy = zeros(n_rows, n_columns);
     It = zeros(n_rows, n_columns);
     v_const=[];
+    v_afim=[];
 
     %obtenção das derivadas parciais para cada uma das imagens
     for i=1:n_rows-1
@@ -39,7 +40,12 @@ function [] = calc_fluxo(image, shift_image, image_name)
            vy=r(2);
            v_const=[v_const;j,i,vx,vy];
            
-           
+           %Modelo afim
+           model_afim = [ix i*ix j*ix iy i*iy j*iy];
+           r = pinv(model_afim)*b;
+           vx=r(1)+i*r(2)+j*r(3);
+           vy=r(4)+i*r(5)+j*r(6);
+           v_afim=[v_afim;j,i,vx,vy];
        end
     end
 
@@ -57,6 +63,22 @@ function [] = calc_fluxo(image, shift_image, image_name)
         saveas(gcf, '../Output/v_shift_vector', 'jpg');
     elseif(strcmp(image_name,'shift diagonal')==1)
         saveas(gcf, '../Output/d_shift_vector', 'jpg');
+    end
+
+    %Modelo Afim
+    imshow(shift_image);
+    hold on
+        for i=1:length(v_afim)
+            quiver(v_afim(i,1),v_afim(i,2),v_afim(i,3),v_afim(i,4),step/2,'b');
+        end
+        title(['Vectores do Modelo Afim -> ' image_name]);
+    hold off
+    if(strcmp(image_name,'shift horizontal')==1)
+        saveas(gcf, '../Output/h_shift_vector_afim', 'jpg');
+    elseif(strcmp(image_name,'shift vertical')==1)
+        saveas(gcf, '../Output/v_shift_vector_afim', 'jpg');
+    elseif(strcmp(image_name,'shift diagonal')==1)
+        saveas(gcf, '../Output/d_shift_vector_afim', 'jpg');
     end
 
 end
