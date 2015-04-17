@@ -28,7 +28,7 @@ function[] = calc_componentes()
         title('Imagem peppers.png com shift diagonal');
         saveas(gcf, '../Output/d_shift_image', 'jpg');
         
-    %exercise 3 e 4
+    %exercise 3, 4, 5 e 6
         calc_fluxo(image, h_shift_image, 'shift horizontal');
         calc_fluxo(image, v_shift_image, 'shift vertical');
         calc_fluxo(image, d_shift_image, 'shift diagonal');

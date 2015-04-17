@@ -48,7 +48,32 @@ function [] = calc_fluxo(image, shift_image, image_name)
            v_afim=[v_afim;j,i,vx,vy];
        end
     end
-
+    
+    %vectores medios de movimento
+    vx_medio_const = mean(v_const(:,3))
+    vy_medio_const = mean(v_const(:,4))
+    vx_medio_afim = mean(v_afim(:,3))
+    vy_medio_afim = mean(v_afim(:,4))
+    
+    %desvio padrão em módulo e direcção
+    vx_desvio_const = std(v_const(:,3))
+    vy_desvio_const = std(v_const(:,4))
+    vx_desvio_afim = std(v_afim(:,3))
+    vy_desvio_afim = std(v_afim(:,4))
+    
+    vx_modulo_const = abs(vy_desvio_const)
+    vy_modulo_const = abs(vy_desvio_const)
+    vx_modulo_afim = abs(vx_desvio_afim)
+    vy_modulo_afim = abs(vx_desvio_afim)
+    
+    vx_fase_const = angle(vy_desvio_const)
+    vy_fase_const = angle(vy_desvio_const)
+    vx_fase_afim = angle(vx_desvio_afim)
+    vy_fase_afim = angle(vx_desvio_afim)
+    
+    
+    
+    %Desenho dos vectores de movimento
     %Modelo Constante
     imshow(shift_image);
     hold on
