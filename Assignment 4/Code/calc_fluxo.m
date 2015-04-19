@@ -1,5 +1,5 @@
 function [] = calc_fluxo(image, shift_image, image_name)
-    %criação das estruturas para as derivadas parciais
+    %criaï¿½ï¿½o das estruturas para as derivadas parciais
     [n_rows n_columns] = size(image);
     Ix = zeros(n_rows, n_columns);
     Iy = zeros(n_rows, n_columns);
@@ -7,7 +7,7 @@ function [] = calc_fluxo(image, shift_image, image_name)
     v_const=[];
     v_afim=[];
 
-    %obtenção das derivadas parciais para cada uma das imagens
+    %obtenï¿½ï¿½o das derivadas parciais para cada uma das imagens
     for i=1:n_rows-1
         for j=1:n_columns-1
             Ix(i,j)= (1/4)*(image(i+1,j)+shift_image(i+1,j)+image(i+1,j+1)+shift_image(i+1,j+1))-(1/4)*(image(i,j)+shift_image(i,j)+image(i,j+1)+shift_image(i,j+1));
@@ -55,7 +55,7 @@ function [] = calc_fluxo(image, shift_image, image_name)
     vx_medio_afim = mean(v_afim(:,3))
     vy_medio_afim = mean(v_afim(:,4))
     
-    %desvio padrão em módulo e direcção
+    %desvio padrï¿½o em mï¿½dulo e direcï¿½ï¿½o
     vx_desvio_const = std(v_const(:,3))
     vy_desvio_const = std(v_const(:,4))
     vx_desvio_afim = std(v_afim(:,3))
@@ -88,6 +88,14 @@ function [] = calc_fluxo(image, shift_image, image_name)
         saveas(gcf, '../Output/v_shift_vector', 'jpg');
     elseif(strcmp(image_name,'shift diagonal')==1)
         saveas(gcf, '../Output/d_shift_vector', 'jpg');
+    elseif(strcmp(image_name,'shift horizontal 2')==1)
+        saveas(gcf, '../Output/h_shift_vector_2', 'jpg');
+    elseif(strcmp(image_name,'shift vertical 2')==1)
+        saveas(gcf, '../Output/v_shift_vector_2', 'jpg');
+    elseif(strcmp(image_name,'shift diagonal 2')==1)
+        saveas(gcf, '../Output/d_shift_vector_2', 'jpg');
+    else
+        saveas(gcf, '../Output/hv_shift_vector', 'jpg');
     end
 
     %Modelo Afim
@@ -104,6 +112,14 @@ function [] = calc_fluxo(image, shift_image, image_name)
         saveas(gcf, '../Output/v_shift_vector_afim', 'jpg');
     elseif(strcmp(image_name,'shift diagonal')==1)
         saveas(gcf, '../Output/d_shift_vector_afim', 'jpg');
+    elseif(strcmp(image_name,'shift horizontal 2')==1)
+        saveas(gcf, '../Output/h_shift_vector_afim_2', 'jpg');
+    elseif(strcmp(image_name,'shift vertical 2')==1)
+        saveas(gcf, '../Output/v_shift_vector_afim_2', 'jpg');
+    elseif(strcmp(image_name,'shift diagonal 2')==1)
+        saveas(gcf, '../Output/d_shift_vector_afim_2', 'jpg');
+    else
+        saveas(gcf, '../Output/hv_shift_vector_afim', 'jpg');
     end
 
 end
