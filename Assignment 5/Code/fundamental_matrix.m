@@ -16,9 +16,16 @@ function F = fundamental_matrix()
     showImage(right_image_05, right_image_corners_05, 'RightCamera05');
     showImage(left_image_02, left_image_corners_02, 'LeftCamera02');
     showImage(left_image_05, left_image_corners_05, 'LeftCamera05');
-    
+
 %% exercise one   
-% calculate the fundamental matrix
+% calculate the fundamental matrix with 8 points algorithm
+% normalização das coordenadas
+pe = [left_image_corners_02(:,1) left_image_corners_02(:,2) left_image_corners_05(:,1) left_image_corners_05(:,2)];
+pe = [pe ones(10,1)];
+pd = [right_image_corners_02(:,1) right_image_corners_02(:,2) right_image_corners_05(:,1) right_image_corners_05(:,2)];
+pd = [pd ones(10,1)];
+
+
     
 end
 
