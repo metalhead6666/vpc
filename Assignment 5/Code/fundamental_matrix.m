@@ -33,8 +33,8 @@ function F = fundamental_matrix()
     d_e = sum(sqrt((left_points(:, 1) - xe) .^ 2 + (left_points(:, 2) - ye) .^ 2)) ./ (20 * sqrt(2));
     d_d = sum(sqrt((right_points(:, 1) - xd) .^ 2 + (right_points(:, 2) - yd) .^ 2)) ./ (20 * sqrt(2));
     
-    Te = [1 0 -xe; 1 0 -ye; 0 0 d_e];
-    Td = [1 0 -xd; 1 0 -yd; 0 0 d_d];
+    Te = [1 0 -xe; 0 1 -ye; 0 0 d_e];
+    Td = [1 0 -xd; 0 1 -yd; 0 0 d_d];
     
     left_points_normalized = Te * left_points';
     left_points_normalized = (left_points_normalized / 168.9889)';
