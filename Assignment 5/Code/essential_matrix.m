@@ -7,13 +7,5 @@ function E = essential_matrix(F)
 %% exercise 5
 % determinação da matriz essencial
     E = Kdir' * F * Kesq
-    
-% rotação e translação 
-    W = [0 -1 0; 1 0 0; 0 0 1];
-    [U D V] = svd(E);
-    R = U*W*V'
-
-    
-    
 end
                     
