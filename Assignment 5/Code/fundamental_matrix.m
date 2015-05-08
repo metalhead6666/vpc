@@ -20,33 +20,33 @@ function F = fundamental_matrix()
     %% exercise one   
     % calculate the fundamental matrix with 8 points algorithm
     % normalization of the coordinates
-    pe = [left_image_corners_02(:, 1) left_image_corners_02(:, 2) left_image_corners_05(:, 1) left_image_corners_05(:, 2)];
-    pe = [pe ones(10, 1)];
-    pd = [right_image_corners_02(:, 1) right_image_corners_02(:, 2) right_image_corners_05(:, 1) right_image_corners_05(:, 2)];
-    pd = [pd ones(10, 1)];
+    left_points = [left_image_corners_02(:, 1) left_image_corners_02(:, 2); left_image_corners_05(:, 1) left_image_corners_05(:, 2)];
+    left_points = [left_points ones(20, 1)];
+    right_points = [right_image_corners_02(:, 1) right_image_corners_02(:, 2); right_image_corners_05(:, 1) right_image_corners_05(:, 2)];
+    right_points = [right_points ones(20, 1)];
 
-    xe = mean(pe(:, 1));
-    ye = mean(pe(:, 2));
-    xd = mean(pd(:, 1));
-    yd = mean(pd(:, 2));
+    xe = mean(left_points(:, 1));
+    ye = mean(left_points(:, 2));
+    xd = mean(right_points(:, 1));
+    yd = mean(right_points(:, 2));
     
-    d_e = sum(sqrt((pe(:, 1) - xe) .^ 2 + (pe(:, 2) - ye) .^ 2)) ./ (10 * sqrt(2));
-    d_d = sum(sqrt((pd(:, 1) - xd) .^ 2 + (pd(:, 2) - yd) .^ 2)) ./ (10 * sqrt(2));
+    d_e = sum(sqrt((left_points(:, 1) - xe) .^ 2 + (left_points(:, 2) - ye) .^ 2)) ./ (20 * sqrt(2));
+    d_d = sum(sqrt((right_points(:, 1) - xd) .^ 2 + (right_points(:, 2) - yd) .^ 2)) ./ (20 * sqrt(2));
     
     Te = [1 0 -xe; 1 0 -ye; 0 0 d_e];
     Td = [1 0 -xd; 1 0 -yd; 0 0 d_d];
     
-    pe_normalized = Te * pe';
-    pe_normalized = (pe_normalized / 168.9889)';
-    pd_normalized = Td * pd';
-    pd_normalized = (pd_normalized / 108.1601)';
+    left_points_normalized = Te * left_points';
+    left_points_normalized = (left_points_normalized / 168.9889)';
+    right_points_normalized = Td * right_points';
+    right_points_normalized = (right_points_normalized / 108.1601)';
     
-    A = zeros(length(pe_normalized), 9);
+    A = zeros(length(left_points_normalized), 9);
     
-    for i = 1 : length(pe_normalized)
-        A(i, :) = [pd_normalized(i, 1)*pe_normalized(i, 1) pd_normalized(i, 1)*pe_normalized(i, 2) pd_normalized(i, 1) ...
-                   pd_normalized(i, 2)*pe_normalized(i, 1) pd_normalized(i, 2)*pd_normalized(i, 2) pd_normalized(i, 2) ...
-                   pe_normalized(i, 1) pe_normalized(i, 2) 1];
+    for i = 1 : length(left_points_normalized)
+        A(i, :) = [right_points_normalized(i, 1)*left_points_normalized(i, 1) right_points_normalized(i, 1)*left_points_normalized(i, 2) right_points_normalized(i, 1) ...
+                   right_points_normalized(i, 2)*left_points_normalized(i, 1) right_points_normalized(i, 2)*right_points_normalized(i, 2) right_points_normalized(i, 2) ...
+                   left_points_normalized(i, 1) left_points_normalized(i, 2) 1];
     end
     
     [~, D, V] = svd(A);
@@ -61,7 +61,7 @@ function F = fundamental_matrix()
     
     F_normalized = U * D * V';
     
-    F = Td' * F_normalized * Te;
+    F = Td' * F_normalized * Te
 end
 
 function image = readImage(str)
