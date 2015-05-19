@@ -3,17 +3,17 @@ clear all
 clc 
 
     % Definition of the points in the different frames
-        frame0 = [133 281; 186 81; 310 345; 325 133; 261 114];  
-        frame10 = [129 281; 191 86; 313 342; 338 135; 272 115];
-        frame20 = [130 277; 196 89; 316 342; 352 137; 283 117];
-        frame30 = [131 279; 187 84; 310 341; 364 139; 295 115];
-        frame40 = [123 275; 200 91; 317 342; 372 139; 307 112];
-        frame50 = [125 271; 207 91; 319 341; 385 142; 315 115];
-        frame60 = [123 264; 215 92; 324 336; 388 137; 318 110];
-        frame70 = [119 267; 211 97; 330 324; 391 130; 317 109];
-        frame80 = [115 266; 206 101; 336 315; 392 126; 319 108];
-        frame90 = [112 266; 198 103; 340 307; 392 123; 315 106];
-        frame100 = [106 265; 190 111; 340 299; 390 124; 313 107];
+        frame0 = [133 281; 186 81; 310 345; 328 133; 351 114; 480 177];  
+        frame10 = [129 281; 191 86; 313 342; 338 135; 364 118; 485 194];
+        frame20 = [130 277; 196 89; 316 342; 352 137; 376 123; 490 212];
+        frame30 = [131 279; 187 84; 310 341; 364 139; 388 128; 491 230];
+        frame40 = [123 275; 200 91; 317 342; 372 139; 400 130; 492 247];
+        frame50 = [125 271; 207 91; 319 341; 385 142; 410 137; 493 262];
+        frame60 = [123 264; 215 92; 324 336; 388 137; 413 130; 487 263];
+        frame70 = [119 267; 211 97; 330 324; 391 130; 413 127; 483 267];
+        frame80 = [115 266; 206 101; 336 315; 392 126; 414 125; 475 273];
+        frame90 = [112 266; 198 103; 340 307; 392 123; 412 123; 463 279];
+        frame100 = [106 265; 190 111; 340 299; 390 124; 408 125; 457 283];
 
         images = {'hotel.seq0.png', 'hotel.seq10.png', 'hotel.seq20.png', 'hotel.seq30.png', 'hotel.seq40.png', 'hotel.seq50.png', 'hotel.seq60.png', 'hotel.seq70.png', 'hotel.seq80.png', 'hotel.seq90.png', 'hotel.seq100.png'};
         frames = {frame0, frame10, frame20, frame30, frame40, frame50, frame60, frame70, frame80, frame90, frame100};
@@ -27,6 +27,7 @@ clc
             title(str);
             str = strcat('../Output/', images{i});
             saveas(gcf, str);
+            pause();
         end
         
         
@@ -39,7 +40,7 @@ clc
              frame80(:,2)'; frame90(:,2)'; frame100(:,2)'];
 
     % Registered_measurement_matrix 
-        registered_measurement_matrix  = zeros(22,5);
+        registered_measurement_matrix  = zeros(22,6);
         for i=1 : 11
            average = mean(W(i,:));
            registered_measurement_matrix(i,:) = W(i,:) - average; 
