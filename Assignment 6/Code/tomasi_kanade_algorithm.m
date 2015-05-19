@@ -3,7 +3,7 @@ clear all
 clc 
 
     % Definition of the points in the different frames
-        frame0 = [133 281; 186 81; 310 345; 325 133; 261 114];
+        frame0 = [133 281; 186 81; 310 345; 325 133; 261 114];  
         frame10 = [129 281; 191 86; 313 342; 338 135; 272 115];
         frame20 = [130 277; 196 89; 316 342; 352 137; 283 117];
         frame30 = [131 279; 187 84; 310 341; 364 139; 295 115];
@@ -15,6 +15,21 @@ clc
         frame90 = [112 266; 198 103; 340 307; 392 123; 315 106];
         frame100 = [106 265; 190 111; 340 299; 390 124; 313 107];
 
+        images = {'hotel.seq0.png', 'hotel.seq10.png', 'hotel.seq20.png', 'hotel.seq30.png', 'hotel.seq40.png', 'hotel.seq50.png', 'hotel.seq60.png', 'hotel.seq70.png', 'hotel.seq80.png', 'hotel.seq90.png', 'hotel.seq100.png'};
+        frames = {frame0, frame10, frame20, frame30, frame40, frame50, frame60, frame70, frame80, frame90, frame100};
+        for i=1:11
+            str = strcat('../hotel/', images{i});
+            image = imread(str);
+            imshow(image);
+            hold on;
+            plot(frames{i}(:,1), frames{i}(:,2), 'g*');
+            str = strcat('Imagem: ', images{i});
+            title(str);
+            str = strcat('../Output/', images{i});
+            saveas(gcf, str);
+        end
+        
+        
     % Matrix W
         W = [frame0(:,1)'; frame10(:,1)'; frame20(:,1)'; frame30(:,1)'; 
              frame40(:,1)'; frame50(:,1)'; frame60(:,1)'; frame70(:,1)';
