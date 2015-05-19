@@ -16,6 +16,7 @@ clc
         frame100 = [106 265; 190 111; 340 299; 390 124; 408 125; 457 283];
 
         images = {'hotel.seq0.png', 'hotel.seq10.png', 'hotel.seq20.png', 'hotel.seq30.png', 'hotel.seq40.png', 'hotel.seq50.png', 'hotel.seq60.png', 'hotel.seq70.png', 'hotel.seq80.png', 'hotel.seq90.png', 'hotel.seq100.png'};
+        images2 = {'hotelseq0.png', 'hotelseq10.png', 'hotelseq20.png', 'hotelseq30.png', 'hotelseq40.png', 'hotelseq50.png', 'hotelseq60.png', 'hotelseq70.png', 'hotelseq80.png', 'hotelseq90.png', 'hotelseq100.png'};
         frames = {frame0, frame10, frame20, frame30, frame40, frame50, frame60, frame70, frame80, frame90, frame100};
         for i=1:11
             str = strcat('../hotel/', images{i});
@@ -25,7 +26,7 @@ clc
             plot(frames{i}(:,1), frames{i}(:,2), 'g*');
             str = strcat('Imagem: ', images{i});
             title(str);
-            str = strcat('../Output/', images{i});
+            str = strcat('../Output/', images2{i});
             saveas(gcf, str);
             pause();
         end
@@ -76,4 +77,6 @@ clc
         Q = (chol(L_matrix))';
         R_matrix=R_matrix*Q;
         S_matrix=inv(Q)*S_matrix;
+        
+     close all;
 end
