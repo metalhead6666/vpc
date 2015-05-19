@@ -28,7 +28,6 @@ clc
             title(str);
             str = strcat('../Output/', images2{i});
             saveas(gcf, str);
-            pause();
         end
         
         
