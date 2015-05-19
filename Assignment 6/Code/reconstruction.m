@@ -26,6 +26,6 @@ function reconstruction()
     plot3(P2(1, :), P2(2, :), P2(3, :), 'r*')
     pause;
     plot3(P3(1, :), P3(2, :), P3(3, :), 'r*')
-    
+    pause;
     close all;
 end
