@@ -40,6 +40,8 @@ function mapping()
     
 %  1.3
 	homography_matrix(transformed_mesh_1);
+	homography_matrix(transformed_mesh_2);
+	homography_matrix(transformed_mesh_3);
 end
 
 function plot_and_save_mesh(mesh, str)
