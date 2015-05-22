@@ -8,12 +8,15 @@ function mapping()
     plot_and_save_mesh(mesh_points, 'squared mesh');
     
 %  1.2
+	x = mesh_points(:, 1);
+	y = mesh_points(:, 2);
+
 %  x' = 2 + 3x^2 + 5y^2
 %  y' = 5 + 1/2x^2 + 3y^2
     transformed_mesh_1 = zeros(size(mesh_points));
     
-    transformed_mesh_1(:, 1) = 2 + 3 .* (mesh_points(:, 1)).^2 + 5 .* (mesh_points(:, 2)).^2;
-    transformed_mesh_1(:, 2) = 5 + (1/2) .* (mesh_points(:, 1)).^2 + 3 .* (mesh_points(:, 2)).^2;
+    transformed_mesh_1(:, 1) = 2 + 3 .* x.^2 + 5 .* y.^2;
+    transformed_mesh_1(:, 2) = 5 + (1/2) .* x.^2 + 3 .* y.^2;
     
     plot_and_save_mesh(transformed_mesh_1, 'transformed mesh 1');
     
@@ -21,8 +24,8 @@ function mapping()
 %  y' = 1/3 + 2e^(-2x) + 3e^(-y/2)
     transformed_mesh_2 = zeros(size(mesh_points));
     
-    transformed_mesh_2(:, 1) = 2 + 3 .* exp(-mesh_points(:, 1)) + 5 .* exp(-mesh_points(:, 2));
-    transformed_mesh_2(:, 2) = 1/3 + 2 .* exp(-2 .* mesh_points(:, 1)) + 3 .* exp(-(mesh_points(:, 2)./2));
+    transformed_mesh_2(:, 1) = 2 + 3 .* exp(-x) + 5 .* exp(-y);
+    transformed_mesh_2(:, 2) = 1/3 + 2 .* exp(-2.*x) + 3 .* exp(-(y./2));
     
     plot_and_save_mesh(transformed_mesh_2, 'transformed mesh 2');
     
@@ -30,13 +33,13 @@ function mapping()
 %  y' = cos(x) + sin(y)
     transformed_mesh_3 = zeros(size(mesh_points));
     
-    transformed_mesh_3(:, 1) = mesh_points(:, 1).^2 + mesh_points(:, 2).^3;
-    transformed_mesh_3(:, 2) = cos(mesh_points(:, 1)) + sin(mesh_points(:, 2));
+    transformed_mesh_3(:, 1) = x.^2 + y.^3;
+    transformed_mesh_3(:, 2) = cos(x) + sin(y);
     
     plot_and_save_mesh(transformed_mesh_3, 'transformed mesh 3');
     
 %  1.3
-        
+	homography_matrix(transformed_mesh_1);
 end
 
 function plot_and_save_mesh(mesh, str)
@@ -45,4 +48,13 @@ function plot_and_save_mesh(mesh, str)
     str = strcat('../Output/', str);    
     saveas(gcf, str, 'jpg');
     close all;
+end
+
+function homography_matrix(transformed_mesh)
+	x1 = transformed_mesh(:, 1);
+	y1 = transformed_mesh(:, 2);
+	x2 = []; % ?
+	y2 = []; % ?
+    ax = [-x1 -y1 -1 0 0 0 x2.*x1 x2.*y1 x2].';
+    ay = [0 0 0 -x1 -y1 -1 y2.*x1 y2.*y1 y2].';
 end
