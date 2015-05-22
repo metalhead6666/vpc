@@ -15,8 +15,8 @@ function mapping()
 %  y' = 5 + 1/2x^2 + 3y^2
     transformed_mesh_1 = zeros(size(mesh_points));
     
-    transformed_mesh_1(:, 1) = 2 + 3 .* x.^2 + 5 .* y.^2;
-    transformed_mesh_1(:, 2) = 5 + (1/2) .* x.^2 + 3 .* y.^2;
+    transformed_mesh_1(:, 1) = 2 + 3.*(x.^2) + 5.*(y.^2);
+    transformed_mesh_1(:, 2) = 5 + (1/2).*(x.^2) + 3.*(y.^2);
     
     plot_and_save_mesh(transformed_mesh_1, 'transformed mesh 1');
     
@@ -24,8 +24,8 @@ function mapping()
 %  y' = 1/3 + 2e^(-2x) + 3e^(-y/2)
     transformed_mesh_2 = zeros(size(mesh_points));
     
-    transformed_mesh_2(:, 1) = 2 + 3 .* exp(-x) + 5 .* exp(-y);
-    transformed_mesh_2(:, 2) = 1/3 + 2 .* exp(-2.*x) + 3 .* exp(-(y./2));
+    transformed_mesh_2(:, 1) = 2 + 3.*exp(-x) + 5.*exp(-y);
+    transformed_mesh_2(:, 2) = 1/3 + 2.*exp(-2.*x) + 3.*exp(-y./2);
     
     plot_and_save_mesh(transformed_mesh_2, 'transformed mesh 2');
     
