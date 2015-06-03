@@ -42,6 +42,36 @@ function mapping()
 	homography_matrix(mesh_points,transformed_mesh_1); 
 	homography_matrix(mesh_points,transformed_mesh_2);
 	homography_matrix(mesh_points,transformed_mesh_3);
+    
+    n = 441;
+    dif_mesh_1 = zeros(n:2);
+    dif_mesh_2 = zeros(n:2);
+    dif_mesh_3 = zeros(n:2);
+    for i=1:n
+        dif_mesh_1(i,:) = mesh_points(i,:) - transformed_mesh_1(i,:);
+        dif_mesh_2(i,:) = mesh_points(i,:) - transformed_mesh_2(i,:);
+        dif_mesh_3(i,:) = mesh_points(i,:) - transformed_mesh_3(i,:);
+    end
+    
+    %Valor médio e desvio-padrão
+    media_x_mesh1 = mean(dif_mesh_1(:,1));
+    media_y_mesh1 = mean(dif_mesh_1(:,2));
+    desvio_x_mesh1 = std(dif_mesh_1(:,1));
+    desvio_y_mesh1 = std(dif_mesh_1(:,2));
+    plot_tab(media_x_mesh1, media_y_mesh1, desvio_x_mesh1, desvio_y_mesh1, 'a');
+    
+    media_x_mesh2 = mean(dif_mesh_2(:,1));
+    media_y_mesh2 = mean(dif_mesh_2(:,2));
+    desvio_x_mesh2 = std(dif_mesh_2(:,1));
+    desvio_y_mesh2 = std(dif_mesh_2(:,2));
+    plot_tab(media_x_mesh2, media_y_mesh2, desvio_x_mesh2, desvio_y_mesh2, 'b');
+    
+    media_x_mesh3 = mean(dif_mesh_3(:,1));
+    media_y_mesh3 = mean(dif_mesh_3(:,2));
+    desvio_x_mesh3 = std(dif_mesh_3(:,1));
+    desvio_y_mesh3 = std(dif_mesh_3(:,2));
+    plot_tab(media_x_mesh3, media_y_mesh3, desvio_x_mesh3, desvio_y_mesh3, 'c');
+    
 end
 
 function plot_and_save_mesh(mesh, str)
@@ -74,7 +104,19 @@ function homography_matrix( mesh_points, transformed_mesh)
     h = V(:,9);
     H = [h(1) h(2) h(3)
          h(4) h(5) h(6)
-         h(7) h(8) h(9)]
+         h(7) h(8) h(9)];
+end
 
-    
+function plot_tab(media_x, media_y, desvio_x, desvio_y, str)
+    Media = [media_x; media_y];
+    DesvioPadrao = [desvio_x; desvio_y];
+    Variables = {'x';'y'};
+    if(strcmp(str,'a')==1)
+        a = table(Media, DesvioPadrao,'RowNames',Variables)
+    elseif(strcmp(str,'b')==1)
+        b = table(Media, DesvioPadrao,'RowNames',Variables)
+    elseif(strcmp(str,'c')==1)
+        c = table(Media, DesvioPadrao,'RowNames',Variables)
+   
+    end
 end
