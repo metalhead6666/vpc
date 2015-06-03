@@ -39,9 +39,9 @@ function mapping()
     plot_and_save_mesh(transformed_mesh_3, 'transformed mesh 3');
     
 %  1.3
-	homography_matrix(transformed_mesh_1);
-	homography_matrix(transformed_mesh_2);
-	homography_matrix(transformed_mesh_3);
+	homography_matrix(mesh_points,transformed_mesh_1); 
+	homography_matrix(mesh_points,transformed_mesh_2);
+	homography_matrix(mesh_points,transformed_mesh_3);
 end
 
 function plot_and_save_mesh(mesh, str)
@@ -52,11 +52,29 @@ function plot_and_save_mesh(mesh, str)
     close all;
 end
 
-function homography_matrix(transformed_mesh)
+function homography_matrix( mesh_points, transformed_mesh)
 	x1 = transformed_mesh(:, 1);
 	y1 = transformed_mesh(:, 2);
-	x2 = []; % ?
-	y2 = []; % ?
-    ax = [-x1 -y1 -1 0 0 0 x2.*x1 x2.*y1 x2].';
-    ay = [0 0 0 -x1 -y1 -1 y2.*x1 y2.*y1 y2].';
+	x2 = mesh_points(:, 1); 
+	y2 = mesh_points(:, 2);
+    n = 441;
+    A = zeros(2*n:9);
+    j=1;
+    for i=1:2:2*n
+        A(i,:) = [-x1(j) -y1(j) -1 0 0 0 x2(j)*x1(j) x2(j)*y1(j) x2(j)];
+        A(i+1,:) = [0 0 0 -x1(j) -y1(j) -1 y2(j)*x1(j) y2(j)*y1(j) y2(j)];
+        j=j+1;
+    end
+    
+    % Decomposition of A in singular values 
+    [U, S, V] = svd(A);
+    
+    % Criation of Matrix H
+    V=V';
+    h = V(:,9);
+    H = [h(1) h(2) h(3)
+         h(4) h(5) h(6)
+         h(7) h(8) h(9)]
+
+    
 end
