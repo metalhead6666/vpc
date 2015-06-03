@@ -39,11 +39,11 @@ function mapping()
     plot_and_save_mesh(transformed_mesh_3, 'transformed mesh 3');
     
 %  1.3
-	homography_matrix(mesh_points,transformed_mesh_1); 
-	homography_matrix(mesh_points,transformed_mesh_2);
-	homography_matrix(mesh_points,transformed_mesh_3);
-    
     n = 441;
+	homography_matrix(mesh_points,transformed_mesh_1, n); 
+	homography_matrix(mesh_points,transformed_mesh_2, n);
+	homography_matrix(mesh_points,transformed_mesh_3, n);
+   
     dif_mesh_1 = zeros(n:2);
     dif_mesh_2 = zeros(n:2);
     dif_mesh_3 = zeros(n:2);
@@ -72,6 +72,38 @@ function mapping()
     desvio_y_mesh3 = std(dif_mesh_3(:,2));
     plot_tab(media_x_mesh3, media_y_mesh3, desvio_x_mesh3, desvio_y_mesh3, 'c');
     
+%2
+    right_image_02 = imread('../Input/Cam_dir_02.ppm');
+    right_image_05 = imread('../Input/Cam_dir_05.ppm');
+    left_image_02 = imread('../Input/Cam_esq_02.ppm');
+    left_image_05 = imread('../Input/Cam_esq_05.ppm');
+    images = {right_image_02; right_image_05; left_image_02; left_image_05};
+    
+%3
+    right_points_02 = [375 337; 390 583; 670 720; 670 405];  
+    right_points_05 = [120 390; 155 670; 585 708; 575 400];  
+    left_points_02 = [220 80; 240 505; 855 525; 895 90]; 
+    left_points_05 = [70 115; 120 715; 755 540; 785 95];
+    
+    images2 = {'rightImage02', 'rightImage05', 'leftImage02', 'leftImage05'};
+    vec_images = {right_points_02, right_points_05, left_points_02, left_points_05};
+    for i=1:4
+        imshow(images{i});
+        hold on;
+        plot(vec_images{i}(:,1), vec_images{i}(:,2), 'g*');
+        str = strcat('Imagem:_', images2{i});
+        str = strcat(str, ' com os pontos');
+        title(str);
+        str = strcat('../Output/', images2{i});
+        saveas(gcf, str, 'jpg');
+    end
+    close all;
+    
+    homografia_02 = homography_matrix( left_points_02, right_points_02, 4)
+    homografia_05 = homography_matrix( left_points_05, right_points_05, 4)
+
+    
+    
 end
 
 function plot_and_save_mesh(mesh, str)
@@ -82,12 +114,11 @@ function plot_and_save_mesh(mesh, str)
     close all;
 end
 
-function homography_matrix( mesh_points, transformed_mesh)
+function [H] = homography_matrix( mesh_points, transformed_mesh, n)
 	x1 = transformed_mesh(:, 1);
 	y1 = transformed_mesh(:, 2);
 	x2 = mesh_points(:, 1); 
 	y2 = mesh_points(:, 2);
-    n = 441;
     A = zeros(2*n:9);
     j=1;
     for i=1:2:2*n
